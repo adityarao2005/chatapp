@@ -1,1 +1,23 @@
-version: "3.8"
+services:
+  backendjs:
+    build:
+      context: ./backend-js
+      dockerfile: ../dockerfiles/dev/node.dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend-js/src:/app/src
+  frontendjs:
+    build:
+      context: ./frontend-react
+      dockerfile: ../dockerfiles/dev/react.dockerfile
+    ports:
+      - "80:3000"
+    volumes:
+      - ./frontend-react/src:/app/src
+      - ./frontend-react/public:/app/public
+  fullstackjs:
+    image: node
+    depends_on:
+      - backendjs
+      - frontendjs
