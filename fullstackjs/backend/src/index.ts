@@ -1,5 +1,4 @@
-// src/index.js
-import express, { Express, Request, Response } from "express";
+/*import express, { Express, Request, Response } from "express";
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -11,3 +10,11 @@ app.get("/", (req: Request, res: Response) => {
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
+*/
+
+import { ExpressApplication, Application } from "@/express-app-impl";
+
+
+const port = process.env.PORT || 3000;
+
+Application.run(ExpressApplication, port);

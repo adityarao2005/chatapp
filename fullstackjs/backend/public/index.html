@@ -1,0 +1,23 @@
+<div id="hello_messages">
+    <h1>Hi</h1>
+    <p>Here are some messages:</p>
+</div>
+
+<script>
+    var loc = window.location, new_uri;
+    if (loc.protocol === "https:") {
+        new_uri = "wss:";
+    } else {
+        new_uri = "ws:";
+    }
+    new_uri += "//" + loc.host + "/api/v1/ws";
+    console.log(new_uri);
+    var ws = new WebSocket(new_uri);
+
+    ws.onmessage = function(event) {
+        var messages = document.getElementById("hello_messages");
+        var message = document.createElement("p");
+        message.innerHTML = event.data;
+        messages.appendChild(message);
+    };
+</script>
