@@ -23,6 +23,7 @@ export class Application {
 	constructor() {
 		// Create the express app with websocket functionality
 		this.app = expressWebSocketPeer(express()).app;
+		this.app.use(express.json());
 	}
 
 	// Set the main router with the route provided
@@ -60,7 +61,7 @@ export class Filter implements IRoutable {
 		this.router.use("/", this.handle);
 	}
 
-	public handle(request: Request, response: Response, next: NextFunction) {
+	public async handle(request: Request, response: Response, next: NextFunction) {
 		console.log(`Request made to ${request.url}`);
 		next();
 	}
@@ -86,45 +87,45 @@ export class Controller implements IRoutable {
 		this.router.trace("/", this.trace);
 	}
 
-	private handle(request: Request, response: Response) {
+	private async handle(request: Request, response: Response) {
 		console.log(`Request made to ${request.url}`);
 		response.status(404).send(`Cannot ${request.method} request to ${request.path}`);
 	}
 
-	public get(request: Request, response: Response) {
-		this.handle(request, response);
+	public async get(request: Request, response: Response) {
+		await this.handle(request, response);
 	}
 
-	public post(request: Request, response: Response) {
-		this.handle(request, response);
+	public async post(request: Request, response: Response) {
+		await this.handle(request, response);
 	}
 
-	public put(request: Request, response: Response) {
-		this.handle(request, response);
+	public async put(request: Request, response: Response) {
+		await this.handle(request, response);
 	}
 
-	public delete(request: Request, response: Response) {
-		this.handle(request, response);
+	public async delete(request: Request, response: Response) {
+		await this.handle(request, response);
 	}
 
-	public patch(request: Request, response: Response) {
-		this.handle(request, response);
+	public async patch(request: Request, response: Response) {
+		await this.handle(request, response);
 	}
 
-	public options(request: Request, response: Response) {
-		this.handle(request, response);
+	public async options(request: Request, response: Response) {
+		await this.handle(request, response);
 	}
 
-	public head(request: Request, response: Response) {
-		this.handle(request, response);
+	public async head(request: Request, response: Response) {
+		await this.handle(request, response);
 	}
 
-	public connect(request: Request, response: Response) {
-		this.handle(request, response);
+	public async connect(request: Request, response: Response) {
+		await this.handle(request, response);
 	}
 
-	public trace(request: Request, response: Response) {
-		this.handle(request, response);
+	public async trace(request: Request, response: Response) {
+		await this.handle(request, response);
 	}
 
 }
@@ -137,28 +138,28 @@ export class WebSocket implements IRoutable {
 	constructor() {
 		this.router = express.Router() as Router;
 
-		this.router.ws("/", (ws: WebSocketPeer, req) => {
-			this.onconnect(ws, req);
-			ws.onmessage = (message) => this.onmessage(ws, message);
-			ws.onclose = () => this.onclose(ws);
-			ws.onerror = (error) => this.onerror(ws, error);
+		this.router.ws("/", async (ws: WebSocketPeer, req) => {
+			await this.onconnect(ws, req);
+			ws.onmessage = async (message) => this.onmessage(ws, message);
+			ws.onclose = async () => this.onclose(ws);
+			ws.onerror = async (error) => this.onerror(ws, error);
 		});
 	}
 
-	public onconnect(ws: WebSocketPeer, req: Request) {
+	public async onconnect(ws: WebSocketPeer, req: Request) {
 	}
 
-	public onmessage(ws: WebSocketPeer, event: MessageEvent) {
+	public async onmessage(ws: WebSocketPeer, event: MessageEvent) {
 	}
 
-	public onclose(ws: WebSocketPeer) {
+	public async onclose(ws: WebSocketPeer) {
 	}
 
-	public onerror(ws: WebSocketPeer, error: ErrorEvent) {
+	public async onerror(ws: WebSocketPeer, error: ErrorEvent) {
 		console.error(error.message);
 	}
 
-	public send(ws: WebSocketPeer, message: string | Buffer) {
+	public async send(ws: WebSocketPeer, message: string | Buffer) {
 		ws.send(message);
 	}
 }

@@ -12,6 +12,7 @@ app.listen(port, () => {
 });
 */
 
+import '@/db/db'
 import { ExpressApplication, Application } from "@/express-app-impl";
 
 

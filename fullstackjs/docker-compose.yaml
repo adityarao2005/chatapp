@@ -1,23 +1,38 @@
 services:
-  backendjs:
+  mongodb:
+    image: mongo
+    container_name: 'mongodb'
+    ports:
+      - '27017:27017'
+    #volumes:
+    #  - data:/data/db
+    env_file:
+      - ./env/mongo.env
+  backend:
     build:
-      context: ./backend-js
-      dockerfile: ../dockerfiles/dev/node.dockerfile
+      context: ./backend
+      dockerfile: ../dockerfiles/backend.dockerfile
     ports:
       - "3000:3000"
+    env_file:
+      - ./env/backend.env
     volumes:
-      - ./backend-js/src:/app/src
-  frontendjs:
-    build:
-      context: ./frontend-react
-      dockerfile: ../dockerfiles/dev/react.dockerfile
-    ports:
-      - "80:3000"
-    volumes:
-      - ./frontend-react/src:/app/src
-      - ./frontend-react/public:/app/public
-  fullstackjs:
-    image: node
+      - ./backend/src:/app/src
+      - ./backend/public:/app/public
     depends_on:
-      - backendjs
-      - frontendjs
+      - mongodb
+    container_name: backend
+  # frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./frontend/src:/app/src
+  #     - /app/node_modules
+  #   stdin_open: true
+  #   tty: true
+  #   depends_on:
+  #     - backend
+  #   container_name: goals-frontend
+#volumes:
+#  data:
