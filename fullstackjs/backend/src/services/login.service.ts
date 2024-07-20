@@ -1,7 +1,7 @@
 import jwtService, { ITokenPayload, ITokenData } from "@/services/jwt.service";
 import { RedisClient } from "@/config/redis";
 import { Auth, User } from "@/models/models";
-import { createHash } from "@/util/security";
+import { createHash } from "@/utils/security";
 
 export interface ILoginData {
 	userID: string;

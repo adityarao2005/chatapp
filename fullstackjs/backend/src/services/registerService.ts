@@ -1,6 +1,6 @@
 import { User, Profile, Auth } from "@/models/models";
-import { allExists } from "@/util/nullables";
-import { createSecureRandom, createHash } from "@/util/security";
+import { allExists } from "@/utils/nullables";
+import { createSecureRandom, createHash } from "@/utils/security";
 import emailService from "@/services/emailService";
 
 // Register data model
@@ -80,7 +80,7 @@ class RegisterService {
         // Check if all required fields exist
         if (!allExists(data.name, data.email, data.username, data.password)) {
             throw new Error('Invalid Request: Not all fields were valid and sent');
-            
+
         }
 
         // Check if the user already exists
