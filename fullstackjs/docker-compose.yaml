@@ -8,6 +8,11 @@ services:
     #  - data:/data/db
     env_file:
       - ./env/mongo.env
+  redis:
+    image: redis
+    container_name: 'redis'
+    ports:
+      - '6379:6379'
   backend:
     build:
       context: ./backend

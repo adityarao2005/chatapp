@@ -1,21 +1,23 @@
-/*import express, { Express, Request, Response } from "express";
+import express from 'express'
+import expressWs from 'express-ws';
+import '@/config/database';
 
-const app: Express = express();
+// Create an express application
+const app = express();
+expressWs(app);
+
+import mainRouter from '@/routes/routes';
+
+// Add static path, json, and urlencoded middleware
+app.use(express.static('public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Use the main router
+app.use(mainRouter)
+
+// Listen on the port
 const port = process.env.PORT || 3000;
-
-app.get("/", (req: Request, res: Response) => {
-    res.send("My Express + TypeScript Server");
-});
-
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
-*/
-
-import '@/db/db'
-import { ExpressApplication, Application } from "@/express-app-impl";
-
-
-const port = process.env.PORT || 3000;
-
-Application.run(ExpressApplication, port);
