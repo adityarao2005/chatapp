@@ -23,3 +23,7 @@ export class WebSocketEndpoint {
 		ws.onerror = async (error: ErrorEvent) => await this.onerror(ws, error);
 	}
 }
+
+export async function wsendpoint(endpoint: WebSocketEndpoint, ws: WebSocket, req: Request) {
+	return endpoint.connect(ws, req);
+}

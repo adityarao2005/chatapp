@@ -1,6 +1,6 @@
-import Redis from 'redis';
+import { createClient } from 'redis';
 
-export const RedisClient = Redis.createClient({
+export const RedisClient = createClient({
     url: process.env.REDIS_URL,
 });
 
